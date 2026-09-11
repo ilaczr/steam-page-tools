@@ -137,6 +137,7 @@ inventoryModules.inventoryService = (() => {
             gem,
             iconUrl: iconUrl(description.icon_url),
             instanceId: String(asset.instanceid || '0'),
+            hasMarketActions: Array.isArray(description.market_actions) && description.market_actions.length > 0,
             hasTemporaryHold: 'cache_expiration' in description || (
                 [
                     ...(Array.isArray(description.owner_descriptions) ? description.owner_descriptions : []),

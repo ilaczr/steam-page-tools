@@ -137,12 +137,11 @@ inventoryModules.inventoryService = (() => {
             gem,
             iconUrl: iconUrl(description.icon_url),
             instanceId: String(asset.instanceid || '0'),
-            hasMarketActions: Array.isArray(description.market_actions) && description.market_actions.length > 0,
             hasTemporaryHold: 'cache_expiration' in description || (
                 [
                     ...(Array.isArray(description.owner_descriptions) ? description.owner_descriptions : []),
                     ...(Array.isArray(description.descriptions) ? description.descriptions : [])
-                ].some(d => /\(\d{1,2}:\d{2}:\d{2}\)/.test(d?.value || ''))
+                ].some(d => d && typeof d.value === 'string' && d.color === 'ff4040' && /\d/.test(d.value))
             ),
             marketFeeBps: parseDecimalToBasisPoints(
                 description.market_fee,

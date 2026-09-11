@@ -431,9 +431,7 @@ inventoryModules.pricingService = (() => {
         }
 
         function getItemPrice(item, { force = false, signal } = {}) {
-            const isGem = item.name === 'Steam Gems' || item.type === 'Steam Gems';
-            const isApp753 = item.appId === '753';
-            const hasMarketValue = !isGem && (item.marketable || (item.marketHashName && ((isApp753 && (item.gem?.eligible || item.type === 'Booster Pack')) || (!isApp753 && (item.isMarketItemType || item.hasCacheExpiration || Number.isSafeInteger(item.marketFeeBps))))));
+            const hasMarketValue = item.marketable || (item.marketHashName && item.hasCacheExpiration);
             if (!hasMarketValue) {
                 return Promise.resolve({
                     retrievedAt: nowImpl(),
@@ -491,9 +489,7 @@ inventoryModules.pricingService = (() => {
             const seen = new Set();
 
             for (const item of items) {
-                const isGem = item.name === 'Steam Gems' || item.type === 'Steam Gems';
-                const isApp753 = item.appId === '753';
-                const hasMarketValue = !isGem && (item.marketable || (item.marketHashName && ((isApp753 && (item.gem?.eligible || item.type === 'Booster Pack')) || (!isApp753 && (item.isMarketItemType || item.hasCacheExpiration || Number.isSafeInteger(item.marketFeeBps))))));
+                const hasMarketValue = item.marketable || (item.marketHashName && item.hasCacheExpiration);
                 if (!hasMarketValue) {
                     continue;
                 }

@@ -23,6 +23,7 @@ const executableUrlAllowlist = new Set([
     'https://steamcommunity.com',
     'https://store.steampowered.com',
     'https://help.steampowered.com/en/faqs/view/451E-96B3-D194-50FC',
+    'https://steamsets.com',
     'https://beta.steamsets.com',
     'https://beta.steamsets.com/badges/search',
     'https://community.fastly.steamstatic.com/economy/image/',
@@ -166,7 +167,7 @@ async function readJson(relativePath) {
 function validateCommonManifest(manifest) {
     assert.equal(manifest.manifest_version, 3);
     assert.equal(manifest.name, 'Steam Page Tools');
-    assert.equal(manifest.version, '1.3.1');
+    assert.equal(manifest.version, '1.3.2');
     assert.equal(manifest.description, manifestDescription);
     assert.equal(
         [...manifest.description].length <= 132,
@@ -175,7 +176,7 @@ function validateCommonManifest(manifest) {
     );
     assert.equal(
         manifest.homepage_url,
-        'https://github.com/ju6697/steam-page-tools'
+        'https://github.com/ilaczr/steam-page-tools'
     );
     assertDeepEqual(manifest.icons, icons, 'Unexpected icon declaration');
     assertDeepEqual(manifest.action, action, 'Unexpected toolbar action');
@@ -339,7 +340,7 @@ async function validateContentSource() {
         "credentials: 'include'",
         'document.cookie',
         'localStorage',
-        "const STEAMSETS_PROFILE_ORIGIN = 'https://beta.steamsets.com';",
+        "const STEAMSETS_PROFILE_ORIGIN = 'https://steamsets.com';",
         "'https://beta.steamsets.com/badges/search'",
         'spt-steamsets-profile',
         'spt-steamsets-promo',
@@ -768,7 +769,7 @@ async function validateDistribution(browser) {
     const directory = resolve(repoRoot, `dist/${browser}`);
     const archive = resolve(
         repoRoot,
-        `dist/steam-page-tools-${browser}-v1.3.1.zip`
+        `dist/steam-page-tools-${browser}-v1.3.2.zip`
     );
     const manifestSource = resolve(repoRoot, `manifests/${browser}.json`);
 
@@ -823,11 +824,11 @@ async function validateBuildOutputsWhenPresent() {
         resolve(repoRoot, 'dist/firefox'),
         resolve(
             repoRoot,
-            'dist/steam-page-tools-chrome-v1.3.1.zip'
+            'dist/steam-page-tools-chrome-v1.3.2.zip'
         ),
         resolve(
             repoRoot,
-            'dist/steam-page-tools-firefox-v1.3.1.zip'
+            'dist/steam-page-tools-firefox-v1.3.2.zip'
         ),
     ];
     const present = await Promise.all(expected.map(exists));

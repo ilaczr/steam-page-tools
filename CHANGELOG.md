@@ -4,6 +4,9 @@ All notable changes to the browser-extension edition are documented here.
 
 ## Unreleased
 
+- Inventory pricing for CS2 items correctly identifies Trade Protected items and completely excludes permanent unmarketable items.
+- Fixed UI race conditions when switching tabs during inventory loading.
+
 ## 1.3.1 - 2026-09-01
 
 ### Added

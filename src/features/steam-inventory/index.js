@@ -471,6 +471,9 @@ inventoryModules.index = (() => {
                     { error: Boolean(result.failures.length || priced.halted) }
                 );
             } catch (error) {
+                if (loadController.signal.aborted) {
+                    return;
+                }
                 ui.setStatus(
                     error.code === 'cancelled'
                         ? 'Inventory loading cancelled.'
@@ -480,7 +483,9 @@ inventoryModules.index = (() => {
                     { error: error.code !== 'cancelled' }
                 );
             } finally {
-                ui.setLoading(false);
+                if (!loadController.signal.aborted) {
+                    ui.setLoading(false);
+                }
             }
         }
 

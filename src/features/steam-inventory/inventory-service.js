@@ -137,8 +137,12 @@ inventoryModules.inventoryService = (() => {
             gem,
             iconUrl: iconUrl(description.icon_url),
             instanceId: String(asset.instanceid || '0'),
-            hasCacheExpiration: 'cache_expiration' in description,
-            hasMarketRestriction: 'market_tradable_restriction' in description || 'market_marketable_restriction' in description,
+            hasTemporaryHold: 'cache_expiration' in description || (
+                [
+                    ...(Array.isArray(description.owner_descriptions) ? description.owner_descriptions : []),
+                    ...(Array.isArray(description.descriptions) ? description.descriptions : [])
+                ].some(d => /\(\d{1,2}:\d{2}:\d{2}\)/.test(d?.value || ''))
+            ),
             marketFeeBps: parseDecimalToBasisPoints(
                 description.market_fee,
                 null

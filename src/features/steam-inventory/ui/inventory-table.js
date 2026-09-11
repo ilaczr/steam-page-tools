@@ -162,7 +162,7 @@ inventoryModules.inventoryTable = (() => {
 
             const isGem = item.name === 'Steam Gems' || item.type === 'Steam Gems';
             const isApp753 = item.appId === '753';
-            const hasMarketValue = !isGem && (item.marketable || (item.marketHashName && ((isApp753 && (item.gem?.eligible || item.type === 'Booster Pack')) || !isApp753)));
+            const hasMarketValue = !isGem && (item.marketable || (item.marketHashName && ((isApp753 && (item.gem?.eligible || item.type === 'Booster Pack')) || (!isApp753 && (item.isMarketItemType || item.hasCacheExpiration || Number.isSafeInteger(item.marketFeeBps))))));
 
             if (loading && hasMarketValue) {
                 return 'Loading…';
@@ -174,7 +174,7 @@ inventoryModules.inventoryTable = (() => {
         function priceTitle(item) {
             const isGem = item.name === 'Steam Gems' || item.type === 'Steam Gems';
             const isApp753 = item.appId === '753';
-            const hasMarketValue = !isGem && (item.marketable || (item.marketHashName && ((isApp753 && (item.gem?.eligible || item.type === 'Booster Pack')) || !isApp753)));
+            const hasMarketValue = !isGem && (item.marketable || (item.marketHashName && ((isApp753 && (item.gem?.eligible || item.type === 'Booster Pack')) || (!isApp753 && (item.isMarketItemType || item.hasCacheExpiration || Number.isSafeInteger(item.marketFeeBps))))));
             if (
                 loading &&
                 hasMarketValue &&

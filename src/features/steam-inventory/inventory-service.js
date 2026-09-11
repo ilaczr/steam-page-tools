@@ -137,6 +137,8 @@ inventoryModules.inventoryService = (() => {
             gem,
             iconUrl: iconUrl(description.icon_url),
             instanceId: String(asset.instanceid || '0'),
+            hasCacheExpiration: 'cache_expiration' in description,
+            hasMarketFeeApp: 'market_fee_app' in description,
             marketFeeBps: parseDecimalToBasisPoints(
                 description.market_fee,
                 null

@@ -24,7 +24,10 @@ inventoryModules.valuationService = (() => {
 
         totals.itemCount += quantity;
 
-        if (!item.marketable) {
+        const isGem = item.name === 'Steam Gems' || item.type === 'Steam Gems';
+        const isApp753 = item.appId === '753';
+        const hasMarketValue = !isGem && (item.marketable || (item.marketHashName && ((isApp753 && (item.gem?.eligible || item.type === 'Booster Pack')) || !isApp753)));
+        if (!hasMarketValue) {
             return;
         }
 

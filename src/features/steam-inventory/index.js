@@ -403,9 +403,13 @@ inventoryModules.index = (() => {
             ui.setStatus('Loading Steam inventory pages…');
 
             try {
+                const active = activeInventory(contexts);
+                const activeContext = contexts.find((c) => active.key === `${c.appId}:${c.contextId}`);
+                const targetContexts = activeContext ? [activeContext] : contexts;
+
                 const result = await inventoryService.loadAll(
                     pageContext.ownerSteamId,
-                    contexts,
+                    targetContexts,
                     {
                         beforePage: ({ signal }) => (
                             waitForNativeInventoryIdle(signal)

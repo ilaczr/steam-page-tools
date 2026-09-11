@@ -138,6 +138,7 @@ inventoryModules.inventoryService = (() => {
             iconUrl: iconUrl(description.icon_url),
             instanceId: String(asset.instanceid || '0'),
             hasCacheExpiration: 'cache_expiration' in description,
+            hasMarketRestriction: 'market_tradable_restriction' in description || 'market_marketable_restriction' in description,
             marketFeeBps: parseDecimalToBasisPoints(
                 description.market_fee,
                 null

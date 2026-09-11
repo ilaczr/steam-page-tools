@@ -837,11 +837,9 @@ inventoryModules.index = (() => {
         window.addEventListener('hashchange', () => {
             setTimeout(() => {
                 const nextInventoryKey = activeInventory(contexts).key;
+                const changed = inventoryKeyChanged(activeInventoryKey, nextInventoryKey);
 
-                if (inventoryKeyChanged(
-                    activeInventoryKey,
-                    nextInventoryKey
-                )) {
+                if (changed) {
                     ui.clearSelection();
                     ui.setStatus(
                         'Selection cleared after switching inventory tabs.'
@@ -854,7 +852,12 @@ inventoryModules.index = (() => {
 
                 render();
                 ui.syncSteamItems();
-                startInitialRefreshWhenNativeReady();
+                
+                if (changed && initialRefreshStarted) {
+                    requestRefresh();
+                } else {
+                    startInitialRefreshWhenNativeReady();
+                }
             }, 80);
         });
         setInterval(() => {
